@@ -1,24 +1,36 @@
-import logo from './logo.svg';
+
+import {BrowserRouter as Router, Switch, Route, BrowserRouter} from 'react-router-dom';
 import './App.css';
+import LogIn from './components/Auth/Login';
+import DashboardLayout from './components/Dashboard/DashboardLayout';
+import DashboardDesign from './components/DashboardDesgin/DashboardDesign';
+import StudyMaterialDash from './components/DashboardMaterial/StudyMaterialDash';
+import { AuthProvider } from './context/AuthContext';
+import Advertisement from './pages/Advertisement';
+import Home from './pages/Home';
+import StudyMaterial from './pages/StudyMaterial';
+import AppRoute from './routes/AppRoute';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <AuthProvider>
+      <div className="App">
+      <BrowserRouter>
+        <Router>
+          <Switch>
+            <Route exact path='/' component={Home}/>
+            <AppRoute exact path='/dashboard/study-materials' component={StudyMaterialDash} layout={DashboardLayout}/>
+            <AppRoute exact path='/dashboard/add_material' component={Advertisement} layout={DashboardLayout}/>
+            <AppRoute exact path='/dashboard/adverts' component={StudyMaterial} layout={DashboardLayout}/>
+            <Route exact path='/login' component={LogIn} />
+             <Route exact path='/test' component={StudyMaterialDash} />
+          </Switch>
+        </Router>
+      </BrowserRouter>
+      
     </div>
+    </AuthProvider>
+    
   );
 }
 
